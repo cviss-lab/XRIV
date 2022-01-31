@@ -39,6 +39,9 @@ class StoreVariables():
         self.brs_mode = args.brs_mode
         self.out_path = args.out    
 
+        if not os.path.exists(self.out_path):
+            os.mkdir(self.out_path)
+
         self.engine = fbrs_engine(self.checkpoint)       
 
 def request_handler(Server):
