@@ -1,6 +1,13 @@
 # Created by https://www.gitignore.io/api/unity
 
+## output folder ##
 server/out
+
+## python ##
+.vscode
+__pycache__
+*.pyc
+__pycache__/
 
 ### Unity ###
 [Ll]ibrary/
