@@ -1,0 +1,3 @@
+[submodule "server/fbrs"]
+	path = server/fbrs
+	url = https://github.com/zaalsabb/fbrs_interactive_segmentation

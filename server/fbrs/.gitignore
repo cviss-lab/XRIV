@@ -1,0 +1,9 @@
+*__pycache__*
+experiments
+pretrained_models
+weights/.
+test
+datasets
+*.so
+*.ipynb_checkpoints*
+*.json
