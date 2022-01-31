@@ -11,7 +11,7 @@
 
 ## Interactive Defect Quantification through Extended Reality
 
-<img align="left" src="misc/img1.png">
+[![](http://img.youtube.com/vi/vOv0GKCy_r0/0.jpg)](https://www.youtube.com/watch?v=vOv0GKCy_r0)
 
 ### Introduction
 
