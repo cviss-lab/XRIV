@@ -11,8 +11,8 @@ using UnityEngine.Networking;
 public class NetworkManager : MonoBehaviour
 {
     public static NetworkManager instance;
-    private string ipAddress;
-    private string port;
+    public string ipAddress;
+    public string port;
     [HideInInspector]
     public string visionAnalysisEndpoint;
     internal byte[] imageBytes;
@@ -25,13 +25,6 @@ public class NetworkManager : MonoBehaviour
 
     public IEnumerator AnalyseLastImageCaptured()
     {
-        String ipAddress = PlayerPrefs.GetString("server_ip");
-        String port = PlayerPrefs.GetString("server_port");
-        if (String.IsNullOrEmpty(ipAddress))
-        {
-            ipAddress = FindIpAddress.instance.defaultIp;
-            port = FindIpAddress.instance.defaultPort;
-        }
 
         visionAnalysisEndpoint = "http://" + ipAddress + ":" + port;
 

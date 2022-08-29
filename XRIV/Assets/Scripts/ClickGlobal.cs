@@ -14,6 +14,7 @@ using NumericsConversion;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using UnityEngine.XR.WSA;
+using Microsoft.MixedReality.OpenXR.BasicSample;
 #if UNITY_WSA && !UNITY_EDITOR // RUNNING ON WINDOWS
 using Windows.Perception.Spatial;
 using Windows.Media.Capture.Frames;
@@ -28,32 +29,19 @@ public class ClickGlobal : MonoBehaviour
     public static int tapsCount = 0;
     public bool continousClicking = false;
     public static bool captureVideo = false;
-    public string UnityTestImage;
     public static bool startImageAnalysis = false;
     public static bool currentlyAnalyzing = false;
-#if UNITY_WSA && !UNITY_EDITOR
-    public VideoFrameReader CameraVideoFrameReader = new VideoFrameReader();
 
-#endif
 
     private async void Awake()
     {
         instance = this;
 
-#if UNITY_WSA && !UNITY_EDITOR // RUNNING ON WINDOWS
-        await CameraVideoFrameReader.Inititalize();
-# endif
     }
-
-
 
     public void ClickPhoto()
     {
-#if UNITY_WSA && !UNITY_EDITOR  // RUNNING ON WINDOWS
-        CameraVideoFrameReader.currentlyCapturing = true;
-#elif UNITY_EDITOR              // RUNNING IN UNITY
-        startImageAnalysis = true;
-#endif
+       LocatableCamera.instance.TakePhoto();
     }
 
     void Update()
@@ -64,8 +52,6 @@ public class ClickGlobal : MonoBehaviour
             currentlyAnalyzing = true;
             tapsCount++;
             StartAnalysis();
-
-
 
         }
     }
@@ -88,10 +74,6 @@ public class ClickGlobal : MonoBehaviour
             ResultsLabel.instance.CreateLabel();
         }
 
-#if UNITY_EDITOR // RUNNING ON UNITY        
-        NetworkManager.instance.imageBytes = LoadJPG(UnityTestImage);
-        CameraProjection.instance.cameraToWorldMatrix = Camera.main.transform.localToWorldMatrix;
-#endif
         StartCoroutine(NetworkManager.instance.AnalyseLastImageCaptured());
 
     }

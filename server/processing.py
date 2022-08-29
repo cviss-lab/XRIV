@@ -3,6 +3,7 @@ import json
 import cv2
 import numpy as np
 import copy
+import base64
 from geometry import load_mat, ProjectToImage, tri_mesh2d, unroll_curves, multiple_areas
 join = os.path.join
 
@@ -11,6 +12,11 @@ def readImage(img_bytes, ServerClass, headers):
     out_path = ServerClass.out_path
     i_img = ServerClass.i
     img = cv2.imdecode(np.frombuffer(img_bytes, dtype='uint8'), 1)
+
+    if img is None:
+        buf_decode = base64.b64decode(img_bytes)
+        buf_arr = np.fromstring(buf_decode, dtype=np.uint8)
+        img = cv2.imdecode(buf_arr, cv2.IMREAD_UNCHANGED)        
 
     save=join(out_path,"CaptureImage%i.jpg" % i_img) 
     cv2.imwrite(save, img)

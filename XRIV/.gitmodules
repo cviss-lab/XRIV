@@ -1,0 +1,3 @@
+[submodule "Assets/xr_ros_unity"]
+	path = Assets/xr_ros_unity
+	url = https://github.com/zaalsabb/xr_ros_unity.git

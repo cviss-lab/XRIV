@@ -33,7 +33,7 @@ First, recursively clone this package:
 git clone --recursive https://github.com/cviss-lab/XRIV.git
 ```
 
-Then install the dependencies listed in the **requirements.txt** to run  [f-BRS](https://github.com/saic-vul/fbrs_interactive_segmentation).
+Then install the dependencies listed in the **requirements.txt** in the **server** folder.
 
 To deploy the server, run the following:
 

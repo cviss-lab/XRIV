@@ -1,11 +1,16 @@
+from email.policy import default
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from datetime import datetime
 import os
 import sys
 import json
+from time import sleep
 import processing
 import argparse
 import socket
+import requests
+from threading import Thread
+
 sys.path.append('./fbrs')
 from fbrs.fbrs_predict import fbrs_engine
 
@@ -51,6 +56,7 @@ def request_handler(Server):
             request_type = Server.headers.get('Request-Type')
             headers = Server.headers
             if request_type == 'InteractSegment':
+                print('Recieved Image. Processing...')
                 VarClass.i += 1            
                 data = Server.rfile.read(length)
                 out = processing.readImage(data, VarClass, headers)
@@ -86,6 +92,40 @@ def get_ip():
         s.close()
     return IP
 
+def send_ip_to_hl2(hostName, serverPort, out_path):
+
+    default_ip = ''
+    fname = join(out_path,'hl2_ip.txt')
+    if os.path.exists(fname):
+        with open(fname,'r') as f:
+            default_ip = f.readlines()[0]
+
+    hl2_ip = input("\nEnter HoloLens 2 IP then press ENTER (default: {}): ".format(default_ip))    
+    if hl2_ip == '':
+        hl2_ip = default_ip
+    hl2_port = 4444
+    hl2_endpoint = "http://{}:{}".format(hl2_ip,hl2_port)
+
+    headers = {
+        'Content-Type': 'application/json"',
+    }
+    data = {"ipAddress":hostName, "port":str(serverPort)}
+
+    with open(fname,'w') as f:
+        f.write(hl2_ip)
+
+    connected = False
+    while True:
+        try:
+            requests.post(hl2_endpoint, json=data, headers=headers) 
+            if not connected:
+                print('Connecting to HoLoLens 2 device...')
+            connected = True            
+        except:
+            connected = False
+            pass
+        sleep(1)
+
 if __name__ == "__main__":
     
     global VarClass
@@ -98,6 +138,9 @@ if __name__ == "__main__":
     webServer = HTTPServer((hostName, serverPort), Handler)
     webServer.socket.settimeout(time_out)
     print("Server started http://%s:%s" % (hostName, serverPort))
+
+    thread = Thread(target = send_ip_to_hl2, args = (hostName, serverPort, VarClass.out_path))
+    thread.start()
 
     try:
         webServer.serve_forever()

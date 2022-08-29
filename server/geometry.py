@@ -37,6 +37,17 @@ def ProjectToImage(cameraToWorldMatrix, intrinsicMatrix, pos, h, w):
     posList = posList[np.logical_and(posList[:, 0] >= -ep, posList[:, 0] <= w+ep)]
     posList = posList[np.logical_and(posList[:, 1] >= -ep, posList[:, 1] <= h+ep)]
 
+    # C = cameraToWorldMatrix[:, -1].reshape((-1, 1))
+    # Rot = cameraToWorldMatrix[:, :-1]
+    # rvec = cv2.Rodrigues(Rot.T)[0]
+    # tvec = Rot.T.dot(C)
+
+    # distCoeffs = np.array([0,0,0,0,0],dtype=np.float32)
+
+    # posList = cv2.projectPoints(pos,rvec,tvec,intrinsicMatrix,distCoeffs)[0].reshape(-1,2)
+
+    # return posList
+
     return posList
 
 
