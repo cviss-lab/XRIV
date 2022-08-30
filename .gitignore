@@ -2,6 +2,8 @@
 
 ## output folder ##
 server/out
+server/server_ip.txt
+server/hl2_ip.txt
 
 ## python ##
 .vscode
@@ -18,7 +20,7 @@ __pycache__/
 [Ll]ogs/
 [Aa]ssets/AssetStoreTools*
 #[Pp]roject[Ss]ettings/
-[Pp]ackages/
+#[Pp]ackages/
 [Uu]nity[Pp]ackage[Mm]anager/
 .vs/
 *.pfx

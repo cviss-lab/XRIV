@@ -1,5 +1,6 @@
 
 
+
 <img align="left" src="misc/logo.jpg">
     
     
@@ -21,9 +22,11 @@ Al-Sabbag, Z. A., Yeum, C. M., & Narasimhan, S. (2022). Interactive defect quant
 
 XRIV allows you to perform interactive segmentation on objects of interest (defects such as spalling, cracks, etc.) and measure their areas automatically. XRIV was implemented on Microsoft's HoloLens 2.
 
-### Installation and Deployment
+### Deployment
 
-XRIV requires an XR device (HoloLens 2) and a local server for deployment. 
+XRIV requires an XR device (HoloLens 2) and a local computer (server) for deployment. 
+
+### Installation and Building From Source
 
 #### Server
 
@@ -41,10 +44,13 @@ To deploy the server, run the following:
 cd server
 python server.py 
 ```
+When prompted, enter the **IP address** of the HoloLens 2 device on your local network.
 
-#### XR Device
+#### HoloLens 2
 
-The unity project was built using **Unity 2019.4**. To deploy the project on your device, use *File -> Build Settings -> Build* on the Universal Windows Platform (UWP) and select a place to store the build. Then, open the resulting *XRIV.sln* on Visual Studio 2019 and deploy it to your device using USB or Wi-Fi. 
+The unity project was built using **Unity 2020.3.24f1**. 
+
+To deploy the project on your device, use *File -> Build Settings -> Build* on the Universal Windows Platform (UWP) and select a place to store the build. Then, open the resulting *XRIV.sln* on Visual Studio 2019 and deploy it to your device using USB or Wi-Fi. 
 
 Once the application starts, enter the *IP address* and *Port* of the server. You can select positive and negative seed points by selecting their option in the menu, and then click on the location to place them. Then, use *Analyze Image* and click to capture an image and send it to the server for analysis.
 

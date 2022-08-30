@@ -31,7 +31,7 @@ class StoreVariables():
         parser.add_argument("--port", help="IP Port",type=int,default=8080)
         parser.add_argument("--checkpoint", help="Pre-trained Model",type=str,default="resnet34_dh128_sbd")
         parser.add_argument("--threshold", help="Segmentation Probability Threshold",type=float,default=0.5)
-        parser.add_argument("--scale", help="Image Downscaling",type=float,default=0.4)
+        parser.add_argument("--scale", help="Image Downscaling",type=float,default=0.3)
         parser.add_argument("--out", help="File Output Path",type=str,default="out")
 
         args = parser.parse_args()
@@ -90,19 +90,32 @@ def get_ip():
         IP = '127.0.0.1'
     finally:
         s.close()
+
+    # if ip is not local, user must enter it manually
+    if IP.split('.')[0] != '192':
+        IP = get_ip_manually('Computer','server_ip.txt')
+
     return IP
 
-def send_ip_to_hl2(hostName, serverPort, out_path):
-
+def get_ip_manually(device,fname):
     default_ip = ''
-    fname = join(out_path,'hl2_ip.txt')
+    out_path = ''
     if os.path.exists(fname):
         with open(fname,'r') as f:
-            default_ip = f.readlines()[0]
+            try:
+                default_ip = f.readlines()[0]        
+            except:
+                pass
+    IP = input("\nEnter Your {} local IP then press ENTER (default: {}): ".format(device,default_ip)) 
+    if IP == '':
+        IP = default_ip           
+    with open(fname,'w') as f:
+        f.write(IP)
 
-    hl2_ip = input("\nEnter HoloLens 2 IP then press ENTER (default: {}): ".format(default_ip))    
-    if hl2_ip == '':
-        hl2_ip = default_ip
+    return IP
+
+def send_ip_to_hl2(hostName, serverPort, hl2_ip):
+
     hl2_port = 4444
     hl2_endpoint = "http://{}:{}".format(hl2_ip,hl2_port)
 
@@ -110,9 +123,6 @@ def send_ip_to_hl2(hostName, serverPort, out_path):
         'Content-Type': 'application/json"',
     }
     data = {"ipAddress":hostName, "port":str(serverPort)}
-
-    with open(fname,'w') as f:
-        f.write(hl2_ip)
 
     connected = False
     while True:
@@ -139,7 +149,9 @@ if __name__ == "__main__":
     webServer.socket.settimeout(time_out)
     print("Server started http://%s:%s" % (hostName, serverPort))
 
-    thread = Thread(target = send_ip_to_hl2, args = (hostName, serverPort, VarClass.out_path))
+    hl2_ip = get_ip_manually('HoloLens 2','hl2_ip.txt')
+
+    thread = Thread(target = send_ip_to_hl2, args = (hostName, serverPort, hl2_ip))
     thread.start()
 
     try:
