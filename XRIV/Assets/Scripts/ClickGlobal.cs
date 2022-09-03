@@ -10,7 +10,6 @@ using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.SpatialAwareness;
 using JsonConversion;
-using NumericsConversion;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using UnityEngine.XR.WSA;
