@@ -64,7 +64,7 @@ The code is released under the MPL 2.0 License. MPL is a copyleft license that i
 
 ### BibTeX Citations
 
-If you use any of our code, please cite our paper and the original [f-BRS](https://github.com/saic-vul/fbrs_interactive_segmentation) paper as:
+If you use any of our code, please cite our paper as:
 
 ```
 @article{al2022interactive,
