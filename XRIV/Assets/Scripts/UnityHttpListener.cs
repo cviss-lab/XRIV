@@ -49,9 +49,6 @@ public class UnityHttpListener : MonoBehaviour
 	{
 		var context = listener.EndGetContext(result);
 
-		Debug.Log("Method: " + context.Request.HttpMethod);
-		Debug.Log("LocalUrl: " + context.Request.Url.LocalPath);
-
 		if (context.Request.QueryString.AllKeys.Length > 0)
 			foreach (var key in context.Request.QueryString.AllKeys)
 			{
@@ -60,7 +57,7 @@ public class UnityHttpListener : MonoBehaviour
 
 		if (context.Request.HttpMethod == "POST")
 		{
-			Thread.Sleep(1000);
+			//Thread.Sleep(1000);
 			var data_text = new StreamReader(context.Request.InputStream,
 								context.Request.ContentEncoding).ReadToEnd();
 			

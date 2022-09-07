@@ -15,9 +15,9 @@ MonoBehaviour:
   isCustomProfile: 1
   observerConfigurations:
   - componentType:
-      reference: Microsoft.MixedReality.Toolkit.XRSDK.WindowsMixedReality.WindowsMixedRealitySpatialMeshObserver,
-        Microsoft.MixedReality.Toolkit.Providers.XRSDK.WindowsMixedReality
-    componentName: XR SDK Windows Mixed Reality Spatial Mesh Observer
+      reference: Microsoft.MixedReality.Toolkit.XRSDK.OpenXR.OpenXRSpatialAwarenessMeshObserver,
+        Microsoft.MixedReality.Toolkit.Providers.OpenXR
+    componentName: OpenXR Spatial Mesh Observer
     priority: 0
-    runtimePlatform: 8
-    observerProfile: {fileID: 11400000, guid: 0e2bb78b2f57e7046bf9c099959d5d15, type: 2}
+    runtimePlatform: 9
+    observerProfile: {fileID: 11400000, guid: de123c8e30c1c474bbf55b02c971cde0, type: 2}

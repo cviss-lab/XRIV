@@ -28,6 +28,9 @@ namespace Microsoft.MixedReality.OpenXR.BasicSample
         public bool loadToTexture = true;
         public string debugImagePath = "";
 
+        [Range(0, 100)]
+        public int qualityLevel = 100;
+
         [HideInInspector]
         public Vector3 position;
 
@@ -279,9 +282,10 @@ namespace Microsoft.MixedReality.OpenXR.BasicSample
 
                     List<byte> byteBuffer = new List<byte>();
                     byteBuffer.Clear();
-                    photoCaptureFrame.CopyRawImageDataIntoBuffer(byteBuffer);
+                    //photoCaptureFrame.CopyRawImageDataIntoBuffer(byteBuffer);
+                    photoCaptureFrame.UploadImageDataToTexture(targetTexture);
                     CameraProjection.instance.cameraToWorldMatrix = transform.localToWorldMatrix;
-                    NetworkManager.instance.imageBytes = byteBuffer.ToArray();
+                    NetworkManager.instance.imageBytes = targetTexture.EncodeToJPG(qualityLevel); ;
                     ClickGlobal.startImageAnalysis = true;
 
                 }
