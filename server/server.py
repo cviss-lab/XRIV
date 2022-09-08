@@ -82,18 +82,18 @@ def request_handler(Server):
             Server.end_headers()
 
 def get_ip():
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-        s.connect(('10.255.255.255', 1))
-        IP = s.getsockname()[0]
-    except Exception:
-        IP = '127.0.0.1'
-    finally:
-        s.close()
+    # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    # try:
+    #     s.connect(('10.255.255.255', 1))
+    #     IP = s.getsockname()[0]
+    # except Exception:
+    #     IP = '127.0.0.1'
+    # finally:
+    #     s.close()
 
-    # if ip is not local, user must enter it manually
-    if IP.split('.')[0] != '192':
-        IP = get_ip_manually('Computer','server_ip.txt')
+    # # if ip is not local, user must enter it manually
+    # if IP.split('.')[0] != '192':
+    IP = get_ip_manually('Computer','server_ip.txt')
 
     return IP
 
@@ -141,13 +141,19 @@ if __name__ == "__main__":
     global VarClass
     VarClass = StoreVariables()
 
-    hostName = get_ip()
-    serverPort = VarClass.port
-    time_out = 1e-6
+    while True:
+        try:
+            hostName = get_ip()
+            serverPort = VarClass.port
+            time_out = 1e-6
 
-    webServer = HTTPServer((hostName, serverPort), Handler)
-    webServer.socket.settimeout(time_out)
-    print("Server started http://%s:%s" % (hostName, serverPort))
+            webServer = HTTPServer((hostName, serverPort), Handler)
+            webServer.socket.settimeout(time_out)
+            break
+        except:
+            print('Incorrect IP address!')
+        
+    print("\nServer started http://%s:%s" % (hostName, serverPort))
 
     hl2_ip = get_ip_manually('HoloLens 2','hl2_ip.txt')
 
